@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Final de Puntos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+        body {
+            font-family: 'Comic Neue', cursive;
+            text-align: center;
+            background: url('./imagenes/fondo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            font-size: 18px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background: darkblue;
+            color: white;
+        }
+        .recompensa {
+            font-size: 24px;
+            display: inline-block;
+            animation: glowEffect 1.5s infinite alternate, blinkEffect 2s infinite alternate;
+        }
+        @keyframes glowEffect {
+            0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+            100% { text-shadow: 0 0 20px rgba(255, 255, 255, 1); }
+        }
+        @keyframes blinkEffect {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista Final de Puntos</h1>
+    <h2 id="fecha"></h2>
+    
+    <input type="text" id="buscador" onkeyup="filtrarTabla()" placeholder="Buscar alumno...">
+    
+    <table id="tablaPuntos">
+        <tr>
+            <th>#</th>
+            <th>Nombre del Alumno</th>
+            <th>Puntos</th>
+            <th>Rango</th>
+            <th>Recompensa</th>
+        </tr>
+    </table>
+    
+    <script>
+        let alumnos = [
+            { id: 1, nombre: "ANDRADERIVERA LUIS EDUARDO", puntos: 2124 },
+            { id: 2, nombre: "ANTONIO MUÑOZ OBED", puntos: 1912 },
+            { id: 3, nombre: "ANTONIO RUIZ EDWIN ELIAS", puntos: 2058 },
+            { id: 4, nombre: "BARRON ARREDONDO ALLISON VALENTINA", puntos: 1756 },
+            { id: 5, nombre: "CAZARES VARGAS DANIELA MONSERRATH", puntos: 2164 },
+            { id: 6, nombre: "CRUZ MENDEZ EDGAR PORFIRIO", puntos: 2169 },
+            { id: 7, nombre: "GARCIA GUERRA JOSE ALEXIS", puntos: 1950 },
+            { id: 8, nombre: "GONZALEZ MORENO ALONDRA ELIZABETH", puntos: 2138 },
+            { id: 9, nombre: "GUERRERO DURAN CESAR EDUARDO", puntos: 2097 },
+            { id: 10, nombre: "HERNANDEZ FERNANDO ARIADNA AISLINN", puntos: 2004 },
+            { id: 11, nombre: "IBARRA DE LA CRUZ JUAN AARON", puntos: 2121 },
+            { id: 12, nombre: "JEREZ NOE JOSE EDUARDO", puntos: 1661 },
+            { id: 13, nombre: "JUAREZ GALLEGOS FRANCISCO DANIEL", puntos: 1567 },
+            { id: 14, nombre: "JUAREZ GALLEGOS MARCELA", puntos: 1758 },
+            { id: 15, nombre: "LOPEZ MARTINEZ TADEO GONZALO", puntos: 2132 },
+            { id: 16, nombre: "LOPEZ NUÑEZ KENDRA LIZET", puntos: 1923 },
+            { id: 17, nombre: "MARQUEZ RODRIGUEZ MELISSA", puntos: 2184 },
+            { id: 18, nombre: "MARTINEZ HERNANDEZ DYLAN ALEXANDRO", puntos: 2086 },
+            { id: 19, nombre: "MARTINEZ MARTINEZ IVAN JACOB", puntos: 2230 },
+            { id: 20, nombre: "MARTINEZ OROZCO ALBA ALMA CAROLINA", puntos: 2034 },
+            { id: 21, nombre: "MEDRANO CARRANCO ABIGAIL", puntos: 2127 },
+            { id: 22, nombre: "NORBERTO LOPEZ JAQUELINE", puntos: 2056 },
+            { id: 23, nombre: "ONTIVEROS MEDINA SOFIA ABIGAIL", puntos: 2010 },
+            { id: 24, nombre: "RAMIREZ LOPEZ GABRIEL ALBERTO", puntos: 2131 },
+            { id: 25, nombre: "RAZO CASTILLO MARIO FERNANDO", puntos: 1839 },
+            { id: 26, nombre: "RENTERIA ESPINO ZURY ALEXANDRA", puntos: 1526 },
+            { id: 27, nombre: "RODRIGUEZ GARZA ZOE DAYANA", puntos: 1854 },
+            { id: 28, nombre: "ROMERO TORRES DALEYZA YAMILETH", puntos: 2067 },
+            { id: 29, nombre: "SAENZ KENDRA NICOLE", puntos: 2143 },
+            { id: 30, nombre: "SALAZAR BARRIOS DEREK ALEJANDRO", puntos: 2091 },
+            { id: 31, nombre: "TORRES PUENTE NAOMI YAMILETH", puntos: 2104 },
+        ];
+
+        function obtenerRango(puntos) {
+            return puntos >= 90 ? "🔥 Gran Maestro" : "🌟 Maestro";
+        }
+
+        function obtenerRecompensas(puntos) {
+            let recompensa = "✨";
+            if (puntos >= 500) recompensa += " 🪐🌟";
+            if (puntos >= 400) recompensa += " 🌠✨";
+            if (puntos >= 300) recompensa += " 🚀✨";
+            if (puntos >= 90) recompensa += " 🌈";
+            if (puntos >= 70) recompensa += " 🌌";
+            return `<span class='recompensa'>${recompensa}</span>`;
+        }
+        
+        function renderTabla() {
+            let tabla = document.getElementById("tablaPuntos");
+            alumnos.forEach(alumno => {
+                let fila = tabla.insertRow();
+                let rango = obtenerRango(alumno.puntos);
+                let recompensa = obtenerRecompensas(alumno.puntos);
+                fila.innerHTML = `<td>${alumno.id}</td><td>${alumno.nombre}</td><td>${alumno.puntos}</td><td>${rango}</td><td>${recompensa}</td>`;
+            });
+        }
+        renderTabla();
+    </script>
+</body>
+</html>
